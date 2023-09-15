@@ -98,7 +98,7 @@ impl GridRenderer {
 
     pub fn draw_background(
         &mut self,
-        canvas: &mut Canvas,
+        canvas: &Canvas,
         grid_position: (u64, u64),
         cell_width: u64,
         style: &Option<Arc<Style>>,
@@ -133,7 +133,7 @@ impl GridRenderer {
 
     pub fn draw_foreground(
         &mut self,
-        canvas: &mut Canvas,
+        canvas: &Canvas,
         text: String,
         grid_position: (u64, u64),
         cell_width: u64,
@@ -204,7 +204,7 @@ impl GridRenderer {
 
     fn draw_underline(
         &self,
-        canvas: &mut Canvas,
+        canvas: &Canvas,
         style: &Arc<Style>,
         underline_style: UnderlineStyle,
         p1: Point,

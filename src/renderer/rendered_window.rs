@@ -4,8 +4,9 @@ use skia_safe::{
     canvas::{SaveLayerRec, SrcRectConstraint},
     gpu::{Budgeted, SurfaceOrigin},
     image_filters::blur,
-    BlendMode, Canvas, Color, Image, ImageInfo, Paint, Point, Rect, SamplingOptions, Surface,
-    SurfaceProps, SurfacePropsFlags,
+    utils::shadow_utils::{draw_shadow, ShadowFlags},
+    BlendMode, Canvas, ClipOp, Color, Image, ImageInfo, Paint, Path, Point, Point3, Rect,
+    SamplingOptions, Surface, SurfaceProps, SurfacePropsFlags,
 };
 
 use crate::{
@@ -61,7 +62,7 @@ pub struct WindowPadding {
     pub bottom: u32,
 }
 
-fn build_window_surface(parent_canvas: &mut Canvas, pixel_size: PhysicalSize<u32>) -> Surface {
+fn build_window_surface(parent_canvas: &Canvas, pixel_size: PhysicalSize<u32>) -> Surface {
     let pixel_size = clamp_render_buffer_size(pixel_size);
     let mut context = parent_canvas.recording_context().unwrap();
     let budgeted = Budgeted::Yes;
@@ -88,7 +89,7 @@ fn build_window_surface(parent_canvas: &mut Canvas, pixel_size: PhysicalSize<u32
 }
 
 fn build_window_surface_with_grid_size(
-    parent_canvas: &mut Canvas,
+    parent_canvas: &Canvas,
     grid_renderer: &GridRenderer,
     grid_size: Dimensions,
 ) -> Surface {
@@ -114,7 +115,7 @@ pub struct LocatedSurface {
 
 impl LocatedSurface {
     fn new(
-        parent_canvas: &mut Canvas,
+        parent_canvas: &Canvas,
         grid_renderer: &GridRenderer,
         grid_size: Dimensions,
         vertical_position: f32,
@@ -168,7 +169,7 @@ pub struct WindowDrawDetails {
 
 impl RenderedWindow {
     pub fn new(
-        parent_canvas: &mut Canvas,
+        parent_canvas: &Canvas,
         grid_renderer: &GridRenderer,
         id: u64,
         grid_position: Point,
@@ -254,7 +255,7 @@ impl RenderedWindow {
 
     pub fn draw(
         &mut self,
-        root_canvas: &mut Canvas,
+        root_canvas: &Canvas,
         settings: &RendererSettings,
         default_background: Color,
         font_dimensions: Dimensions,
@@ -265,6 +266,23 @@ impl RenderedWindow {
         }
 
         let pixel_region = self.pixel_region(font_dimensions);
+
+        if self.floating_order.is_some() {
+            root_canvas.save();
+            let shadow_path = Path::rect(pixel_region, None);
+            root_canvas.clip_path(&shadow_path, Some(ClipOp::Difference), None);
+            draw_shadow(
+                root_canvas,
+                &shadow_path,
+                Point3::new(0., 0., 10.),
+                Point3::new(0., -2., 1.),
+                5.,
+                Color::from_argb((0.03 * 255.) as u8, 0, 0, 0),
+                Color::from_argb((0.35 * 255.) as u8, 0, 0, 0),
+                Some(ShadowFlags::DIRECTIONAL_LIGHT),
+            );
+            root_canvas.restore();
+        }
 
         root_canvas.save();
         root_canvas.clip_rect(pixel_region, None, Some(false));

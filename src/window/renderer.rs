@@ -68,6 +68,7 @@ impl SkiaRenderer {
             FramebufferInfo {
                 fboid: fboid.try_into().expect("Could not create frame buffer id"),
                 format: skia_safe::gpu::gl::Format::RGBA8.into(),
+                ..Default::default()
             }
         };
         let surface = create_surface(windowed_context, &mut gr_context, fb_info);
@@ -79,7 +80,7 @@ impl SkiaRenderer {
         }
     }
 
-    pub fn canvas(&mut self) -> &mut Canvas {
+    pub fn canvas(&mut self) -> &Canvas {
         self.surface.canvas()
     }
 

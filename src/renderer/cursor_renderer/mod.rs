@@ -276,7 +276,7 @@ impl CursorRenderer {
         &mut self,
         grid_renderer: &mut GridRenderer,
         current_mode: &EditorMode,
-        canvas: &mut Canvas,
+        canvas: &Canvas,
         dt: f32,
     ) {
         tracy_zone!("cursor_draw");
@@ -410,7 +410,7 @@ impl CursorRenderer {
         }
     }
 
-    fn draw_rectangle(&self, canvas: &mut Canvas, paint: &Paint) -> Path {
+    fn draw_rectangle(&self, canvas: &Canvas, paint: &Paint) -> Path {
         // The cursor is made up of four points, so I create a path with each of the four
         // corners.
         let mut path = Path::new();
@@ -425,12 +425,7 @@ impl CursorRenderer {
         path
     }
 
-    fn draw_rectangular_outline(
-        &self,
-        canvas: &mut Canvas,
-        paint: &Paint,
-        outline_width: f32,
-    ) -> Path {
+    fn draw_rectangular_outline(&self, canvas: &Canvas, paint: &Paint, outline_width: f32) -> Path {
         let mut rectangle = Path::new();
         rectangle.move_to(self.corners[0].current_position);
         rectangle.line_to(self.corners[1].current_position);

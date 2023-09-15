@@ -143,7 +143,7 @@ impl Renderer {
     /// # Returns
     /// `bool` indicating whether or not font was changed during this frame.
     #[allow(clippy::needless_collect)]
-    pub fn draw_frame(&mut self, root_canvas: &mut Canvas, dt: f32) -> bool {
+    pub fn draw_frame(&mut self, root_canvas: &Canvas, dt: f32) -> bool {
         tracy_zone!("renderer_draw_frame");
         let mut draw_commands = Vec::new();
         while let Ok(draw_command) = self.batched_draw_command_receiver.try_recv() {
@@ -239,7 +239,7 @@ impl Renderer {
             .handle_scale_factor_update(self.os_scale_factor * self.user_scale_factor);
     }
 
-    fn handle_draw_command(&mut self, root_canvas: &mut Canvas, draw_command: DrawCommand) {
+    fn handle_draw_command(&mut self, root_canvas: &Canvas, draw_command: DrawCommand) {
         match draw_command {
             DrawCommand::Window {
                 grid_id,

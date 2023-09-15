@@ -21,7 +21,7 @@ pub trait CursorVfx {
     fn render(
         &self,
         settings: &CursorSettings,
-        canvas: &mut Canvas,
+        canvas: &Canvas,
         grid_renderer: &mut GridRenderer,
         cursor: &Cursor,
     );
@@ -128,7 +128,7 @@ impl CursorVfx for PointHighlight {
     fn render(
         &self,
         settings: &CursorSettings,
-        canvas: &mut Canvas,
+        canvas: &Canvas,
         grid_renderer: &mut GridRenderer,
         cursor: &Cursor,
     ) {
@@ -318,7 +318,7 @@ impl CursorVfx for ParticleTrail {
     fn render(
         &self,
         settings: &CursorSettings,
-        canvas: &mut Canvas,
+        canvas: &Canvas,
         grid_renderer: &mut GridRenderer,
         cursor: &Cursor,
     ) {

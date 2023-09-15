@@ -78,15 +78,21 @@ winres = "0.1.12"
 [target.'cfg(windows)'.dependencies.skia-safe]
 # NOTE: Including textlayout for pre-built binaries
 features = ["gl", "textlayout"]
-version = "0.62.0"
+git = "https://github.com/Kethku/rust-skia"
+branch = "add-shadow-flags"
+# version = "0.62.0"
 
 [target.'cfg(linux)'.dependencies.skia-safe]
 features = ["egl", "gl", "textlayout", "wayland", "x11"]
-version = "0.62.0"
+# version = "0.62.0"
+git = "https://github.com/Kethku/rust-skia"
+branch = "add-shadow-flags"
 
 [target.'cfg(not(linux))'.dependencies.skia-safe]
 features = ["gl"]
-version = "0.62.0"
+# version = "0.62.0"
+git = "https://github.com/Kethku/rust-skia"
+branch = "add-shadow-flags"
 
 [profile.release]
 lto = true
