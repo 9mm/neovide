@@ -601,6 +601,27 @@ vim.g.neovide_floating_blur_amount_y = 2.0
 <p><strong>Available since 0.9.</strong></p>
 <p>Setting <code>g:neovide_floating_blur_amount_x</code> and <code>g:neovide_floating_blur_amount_y</code> controls the blur
 radius on the respective axis for floating windows.</p>
+<h4 id="floating-shadow"><a class="header" href="#floating-shadow">Floating Shadow</a></h4>
+<p>VimScript:</p>
+<pre><code class="language-vim">let g:neovide_floating_shadow = v:true
+let g:neovide_floating_z_height = 10
+let g:neovide_light_angle_degrees = 45
+let g:neovide_light_radius = 5
+</code></pre>
+<p>Lua:</p>
+<pre><code class="language-lua">vim.g.neovide_floating_shadow = v:true
+vim.g.neovide_floating_z_height = 10
+vim.g.neovide_light_angle_degrees = 45
+vim.g.neovide_light_radius = 5
+</code></pre>
+<p><strong>Unreleased yet.</strong></p>
+<p>Setting <code>g:neovide_floating_shadow</code> to false will disable the shadow borders for floating windows.
+The other variables configure the shadow in various ways:</p>
+<ul>
+<li><code>g:neovide_floating_z_height</code> sets the virtual height of the floating window from the ground plane</li>
+<li><code>g:neovide_light_angle_degrees</code> sets the angle from the screen normal of the casting light</li>
+<li><code>g:neovide_light_radius</code> sets the radius of the casting light</li>
+</ul>
 <h4 id="transparency"><a class="header" href="#transparency">Transparency</a></h4>
 <p>VimScript:</p>
 <pre><code class="language-vim">let g:neovide_transparency = 0.8
@@ -1324,6 +1345,10 @@ Neovide.</p>
 not yet supported, but you can work around that either by disabling IME or
 configuring it to only be enabled in insert mode. See
 <a href="configuration.html">Configuration</a>.</p>
+<h2 id="font-size-is-weird-with-high-dpi-display-on-x11"><a class="header" href="#font-size-is-weird-with-high-dpi-display-on-x11">Font size is weird with high dpi display on x11</a></h2>
+<p>Winit looks in multiple locations for the configured dpi.
+Make sure its set in at least one of them. More details
+here: <a href="https://github.com/neovide/neovide/issues/2010#issuecomment-1704416685">#2010</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="maintainer-cookbook"><a class="header" href="#maintainer-cookbook">Maintainer Cookbook</a></h1>
 <p>General notes about collaborating/doing maintenance work on Neovide.</p>
 <h2 id="how-to-keep-your-sanity"><a class="header" href="#how-to-keep-your-sanity">How to keep your sanity</a></h2>
